@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Donate — Terra Fortis Foundation</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .donate-hero {
+    background: var(--green);
+    padding: 140px 0 80px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+  .donate-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(193,68,14,0.12) 0%, transparent 70%);
+  }
+  .donate-hero .container { position: relative; z-index: 2; }
+  .donate-hero .section-label { justify-content: center; color: #f5c896; }
+  .donate-hero .section-label::before { background: #f5c896; }
+  .donate-hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(42px, 6vw, 70px);
+    font-weight: 700;
+    color: var(--warm-white);
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+  .donate-hero h1 em { font-style: italic; color: #f5c896; }
+  .donate-hero p {
+    font-size: 16px;
+    color: rgba(255,255,255,0.6);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.8;
+  }
+
+  /* DONATE SECTION */
+  .donate-section {
+    padding: 80px 0 100px;
+    background: var(--cream);
+  }
+
+  .donate-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  /* IMPACT SIDE */
+  .impact-side h2 {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+  }
+
+  .impact-side > p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.85;
+    margin-bottom: 32px;
+  }
+
+  .impact-list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 36px; }
+
+  .impact-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--warm-white);
+    border-radius: 14px;
+    padding: 20px 22px;
+    border: 1px solid rgba(193,68,14,0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .impact-item:hover {
+    transform: translateX(4px);
+    box-shadow: 0 8px 24px rgba(193,68,14,0.08);
+  }
+
+  .impact-amount {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--terra);
+    min-width: 80px;
+    flex-shrink: 0;
+  }
+
+  .impact-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .impact-desc strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+
+  .trust-badges {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .trust-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  .tb-icon {
+    width: 28px; height: 28px;
+    background: var(--terra-pale);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+
+  /* DONATE FORM SIDE */
+  .donate-form-wrap {
+    background: var(--warm-white);
+    border-radius: 24px;
+    padding: 48px;
+    border: 1px solid rgba(193,68,14,0.1);
+    box-shadow: 0 12px 48px rgba(44,31,20,0.08);
+  }
+
+  .form-heading {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .form-subheading {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 32px;
+    line-height: 1.6;
+  }
+
+  /* DONATION TYPE TOGGLE */
+  .donation-type {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 28px;
+    background: var(--cream);
+    padding: 6px;
+    border-radius: 12px;
+  }
+
+  .type-btn {
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: transparent;
+    color: var(--muted);
+  }
+
+  .type-btn.active {
+    background: var(--warm-white);
+    color: var(--terra);
+    box-shadow: 0 2px 8px rgba(44,31,20,0.08);
+  }
+
+  /* AMOUNT BUTTONS */
+  .amount-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .amount-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .amount-btn {
+    padding: 14px 10px;
+    border: 2px solid rgba(193,68,14,0.15);
+    border-radius: 12px;
+    background: var(--cream);
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+
+  .amount-btn:hover {
+    border-color: var(--terra);
+    background: var(--terra-pale);
+    color: var(--terra);
+  }
+
+  .amount-btn.selected {
+    border-color: var(--terra);
+    background: var(--terra);
+    color: var(--warm-white);
+  }
+
+  .custom-amount-wrap {
+    position: relative;
+    margin-bottom: 28px;
+  }
+
+  .custom-amount-wrap label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text);
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .custom-amount-inner {
+    display: flex;
+    align-items: center;
+    border: 2px solid rgba(74,47,26,0.12);
+    border-radius: 12px;
+    background: var(--cream);
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .custom-amount-inner:focus-within { border-color: var(--terra); background: var(--warm-white); }
+
+  .currency-symbol {
+    padding: 14px 16px;
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--terra);
+    border-right: 2px solid rgba(74,47,26,0.08);
+    background: transparent;
+  }
+
+  .custom-amount-input {
+    flex: 1;
+    padding: 14px 16px;
+    border: none;
+    background: transparent;
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    outline: none;
+    width: 100%;
+  }
+
+  .custom-amount-input::placeholder { color: rgba(74,47,26,0.2); }
+
+  /* DONOR INFO */
+  .donor-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-bottom: 28px;
+  }
+
+  .donor-info .form-group { margin-bottom: 16px; }
+
+  .donor-info label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text);
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .donor-info input {
+    width: 100%;
+    padding: 13px 16px;
+    border: 1.5px solid rgba(74,47,26,0.12);
+    background: var(--cream);
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    border-radius: 10px;
+  }
+
+  .donor-info input:focus {
+    border-color: var(--terra);
+    background: var(--warm-white);
+  }
+
+  .name-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  /* PAYPAL BUTTON */
+  .paypal-section { margin-bottom: 16px; }
+
+  .paypal-note {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+
+  .paypal-btn {
+    width: 100%;
+    background: #ffc439;
+    border: none;
+    border-radius: 12px;
+    padding: 16px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: var(--font-body);
+    color: #003087;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  }
+
+  .paypal-btn:hover {
+    background: #f0b429;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(255,196,57,0.4);
+  }
+
+  .paypal-logo {
+    font-size: 20px;
+    font-weight: 900;
+    font-style: italic;
+  }
+
+  .paypal-logo span:first-child { color: #003087; }
+  .paypal-logo span:last-child { color: #009cde; }
+
+  .secure-note {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 12px;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 20px 0;
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .divider::before,
+  .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(74,47,26,0.1);
+  }
+
+  /* RECURRING NOTE */
+  .recurring-note {
+    background: var(--terra-pale);
+    border-radius: 12px;
+    padding: 16px 20px;
+    font-size: 13px;
+    color: var(--terra);
+    line-height: 1.6;
+    margin-bottom: 24px;
+    display: none;
+  }
+
+  .recurring-note.show { display: block; }
+
+  /* WHAT YOUR GIFT DOES */
+  .gift-impact {
+    padding: 80px 0;
+    background: var(--green);
+    text-align: center;
+  }
+
+  .gift-impact .section-label { justify-content: center; color: #f5c896; }
+  .gift-impact .section-label::before { background: #f5c896; }
+
+  .gift-impact .section-title { color: var(--warm-white); margin-bottom: 48px; }
+
+  .gift-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  .gift-card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 32px 24px;
+    text-align: center;
+    transition: background 0.25s;
+  }
+
+  .gift-card:hover { background: rgba(255,255,255,0.12); }
+
+  .gift-amount {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 700;
+    color: #f5c896;
+    margin-bottom: 10px;
+  }
+
+  .gift-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.7;
+  }
+
+  @media (max-width: 1024px) {
+    .donate-layout { grid-template-columns: 1fr; gap: 48px; }
+    .gift-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 768px) {
+    .donate-form-wrap { padding: 28px 20px; }
+    .amount-grid { grid-template-columns: repeat(2, 1fr); }
+    .name-row { grid-template-columns: 1fr; }
+    .gift-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">⌂</div>
+      <div class="logo-text">
+        <div class="logo-name">Terra Fortis Foundation</div>
+        <div class="logo-tagline">Strong Foundations for Every Family</div>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="donate.html" class="active">Donate</a></li>
+    </ul>
+    <a href="donate.html" class="nav-donate">Donate Now</a>
+    <button class="hamburger" id="hamburger">&#9776;</button>
+  </div>
+</nav>
+
+<section class="donate-hero">
+  <div class="container">
+    <div class="section-label">Make a Difference</div>
+    <h1>Your Gift Builds<br><em>Real Homes</em></h1>
+    <p>Every dollar you give goes directly toward building and repairing homes for families who need them most. Your generosity changes lives — one home at a time.</p>
+  </div>
+</section>
+
+<section class="donate-section">
+  <div class="container donate-layout">
+
+    <!-- IMPACT SIDE -->
+    <div class="impact-side">
+      <h2>What Your Gift Builds</h2>
+      <p>At Terra Fortis Foundation, we are committed to maximizing the impact of every dollar donated. Your generosity directly funds materials, labor, and family support services.</p>
+
+      <div class="impact-list">
+        <div class="impact-item">
+          <div class="impact-amount">$25</div>
+          <div class="impact-desc">
+            <strong>Supplies & Materials</strong>
+            Covers essential building supplies for one day of construction work
+          </div>
+        </div>
+        <div class="impact-item">
+          <div class="impact-amount">$50</div>
+          <div class="impact-desc">
+            <strong>Flooring & Fixtures</strong>
+            Provides flooring materials for one room in a family's new home
+          </div>
+        </div>
+        <div class="impact-item">
+          <div class="impact-amount">$100</div>
+          <div class="impact-desc">
+            <strong>Doors & Windows</strong>
+            Funds a door or window installation — security and dignity for a family
+          </div>
+        </div>
+        <div class="impact-item">
+          <div class="impact-amount">$250</div>
+          <div class="impact-desc">
+            <strong>Electrical or Plumbing</strong>
+            Covers essential systems that make a house truly livable and safe
+          </div>
+        </div>
+        <div class="impact-item">
+          <div class="impact-amount">$500+</div>
+          <div class="impact-desc">
+            <strong>Become a Builder</strong>
+            A transformational gift that funds a major portion of one home's construction
+          </div>
+        </div>
+      </div>
+
+      <div class="trust-badges">
+        <div class="trust-badge">
+          <div class="tb-icon">✓</div>
+          <span>501(c)(3) registered nonprofit — donations are tax deductible</span>
+        </div>
+        <div class="trust-badge">
+          <div class="tb-icon">🔒</div>
+          <span>Secure payment processing via PayPal</span>
+        </div>
+        <div class="trust-badge">
+          <div class="tb-icon">♥</div>
+          <span>100% of funds go directly to housing programs</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- DONATE FORM SIDE -->
+    <div class="donate-form-wrap">
+      <div class="form-heading">Make Your Donation</div>
+      <div class="form-subheading">Choose an amount and complete your gift securely through PayPal. You do not need a PayPal account to donate.</div>
+
+      <!-- ONE-TIME / MONTHLY TOGGLE -->
+      <div class="donation-type">
+        <button class="type-btn active" id="oneTimeBtn" onclick="setType('onetime')">One-Time Gift</button>
+        <button class="type-btn" id="monthlyBtn" onclick="setType('monthly')">Monthly Giving</button>
+      </div>
+
+      <div class="recurring-note" id="recurringNote">
+        ♥ Monthly donors provide reliable support that helps us plan and build more homes. Thank you for your ongoing commitment!
+      </div>
+
+      <!-- AMOUNT SELECTION -->
+      <div class="amount-label">Select Amount</div>
+      <div class="amount-grid">
+        <button class="amount-btn" onclick="selectAmount(25, this)">$25</button>
+        <button class="amount-btn" onclick="selectAmount(50, this)">$50</button>
+        <button class="amount-btn" onclick="selectAmount(100, this)">$100</button>
+        <button class="amount-btn" onclick="selectAmount(250, this)">$250</button>
+        <button class="amount-btn" onclick="selectAmount(500, this)">$500</button>
+        <button class="amount-btn" onclick="selectAmount(1000, this)">$1,000</button>
+      </div>
+
+      <div class="custom-amount-wrap">
+        <label>Or Enter Custom Amount</label>
+        <div class="custom-amount-inner">
+          <div class="currency-symbol">$</div>
+          <input type="number" class="custom-amount-input" id="customAmount" placeholder="Other amount" min="1" oninput="setCustomAmount(this.value)">
+        </div>
+      </div>
+
+      <!-- DONOR INFO -->
+      <div class="donor-info">
+        <div class="name-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" id="donorFirst" placeholder="First name">
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" id="donorLast" placeholder="Last name">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="donorEmail" placeholder="your@email.com">
+        </div>
+      </div>
+
+      <!-- PAYPAL BUTTON -->
+      <div class="paypal-section">
+        <div class="paypal-note">You will be redirected to PayPal to complete your donation securely. You do not need a PayPal account — you can pay with any credit or debit card.</div>
+        <button class="paypal-btn" onclick="donateWithPayPal()">
+          <span>Donate with</span>
+          <span class="paypal-logo">
+            <span>Pay</span><span>Pal</span>
+          </span>
+        </button>
+        <div class="secure-note">🔒 Secured by PayPal · SSL Encrypted</div>
+      </div>
+
+      <div class="divider">or</div>
+
+      <a href="contact.html" class="btn-terra btn-full" style="display:block;text-align:center;padding:15px;border-radius:12px;text-decoration:none">
+        Contact Us About Other Ways to Give
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- WHAT YOUR GIFT DOES -->
+<section class="gift-impact">
+  <div class="container">
+    <div class="section-label">Impact</div>
+    <h2 class="section-title">Every Dollar at Work</h2>
+    <div class="gift-grid">
+      <div class="gift-card">
+        <div class="gift-amount">$25</div>
+        <div class="gift-desc">Supplies for one full day of building — nails, screws, sealant, and more</div>
+      </div>
+      <div class="gift-card">
+        <div class="gift-amount">$100</div>
+        <div class="gift-desc">A door or window — safety and security for a family in their new home</div>
+      </div>
+      <div class="gift-card">
+        <div class="gift-amount">$250</div>
+        <div class="gift-desc">Electrical or plumbing work that makes a house truly livable</div>
+      </div>
+      <div class="gift-card">
+        <div class="gift-amount">$500</div>
+        <div class="gift-desc">A transformational gift — funding a major phase of one family's home</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <div class="footer-icon">⌂</div>
+      <div>
+        <div class="footer-name">Terra Fortis Foundation</div>
+        <div class="footer-tagline">Strong Foundations for Every Family</div>
+      </div>
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="donate.html">Donate</a>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Terra Fortis Foundation. All rights reserved. 501(c)(3) Nonprofit. Donations are tax-deductible.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── Mobile Nav ──
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.querySelector('.nav-links');
+  if (hamburger) {
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+  }
+
+  // ── Donation State ──
+  let selectedAmount = 50;
+  let donationType = 'onetime';
+
+  function setType(type) {
+    donationType = type;
+    document.getElementById('oneTimeBtn').classList.toggle('active', type === 'onetime');
+    document.getElementById('monthlyBtn').classList.toggle('active', type === 'monthly');
+    document.getElementById('recurringNote').classList.toggle('show', type === 'monthly');
+  }
+
+  function selectAmount(amount, btn) {
+    selectedAmount = amount;
+    document.getElementById('customAmount').value = '';
+    document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+  }
+
+  function setCustomAmount(val) {
+    selectedAmount = parseFloat(val) || 0;
+    document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('selected'));
+  }
+
+  function donateWithPayPal() {
+    if (!selectedAmount || selectedAmount < 1) {
+      alert('Please select or enter a donation amount.');
+      return;
+    }
+
+    // ── PAYPAL SETUP INSTRUCTIONS ──
+    // 1. Log in to paypal.com/donate/buttons
+    // 2. Create a donation button for your nonprofit account
+    // 3. Replace YOUR_PAYPAL_BUSINESS_EMAIL below with your PayPal email
+    // 4. For monthly giving, PayPal will handle the subscription automatically
+
+    const email = 'YOUR_PAYPAL_BUSINESS_EMAIL'; // ← Replace this
+    const itemName = donationType === 'monthly'
+      ? 'Terra Fortis Foundation Monthly Donation'
+      : 'Terra Fortis Foundation Donation';
+
+    const cmd = donationType === 'monthly' ? '_xclick-subscriptions' : '_donations';
+
+    const params = new URLSearchParams({
+      business: email,
+      item_name: itemName,
+      amount: selectedAmount.toFixed(2),
+      currency_code: 'USD',
+      cmd: cmd,
+      no_note: '0',
+      return: window.location.origin + '/thank-you.html',
+      cancel_return: window.location.href,
+    });
+
+    if (donationType === 'monthly') {
+      params.set('a3', selectedAmount.toFixed(2));
+      params.set('p3', '1');
+      params.set('t3', 'M');
+      params.set('src', '1');
+    }
+
+    window.location.href = `https://www.paypal.com/cgi-bin/webscr?${params.toString()}`;
+  }
+
+  // Pre-select $50
+  document.addEventListener('DOMContentLoaded', () => {
+    const defaultBtn = document.querySelectorAll('.amount-btn')[1];
+    if (defaultBtn) defaultBtn.classList.add('selected');
+  });
+</script>
+</body>
+</html>
