@@ -58,7 +58,7 @@ if (form) {
     } catch (err) {
       btnText.textContent = 'Send Message';
       btn.disabled = false;
-      alert('There was an issue sending your message. Please email us at info@terrafortisfoundation.org');
+      alert('There was an issue sending your message. Please email us at info@terrafortis.org');
     }
   });
 }
